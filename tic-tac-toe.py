@@ -22,6 +22,10 @@ def display_board(board):
 
 def player_input():
     player1 = input("Please pick a marker 'X' or 'O'")
+    return player1
+
+def win_check(board, mark):
+    display_board(board)
 
 # The game begins... 9th June 26
 clear_screen()
@@ -29,6 +33,7 @@ greet('start')
 
 test_board = ['#','X','O','X','O','X','O','X','O','X']
 display_board(test_board)
-player_input()
+ch = player_input()
+win_check(test_board,ch)
 
 greet('stop')
