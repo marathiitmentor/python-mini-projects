@@ -1,5 +1,9 @@
 from os import name, system
 
+marker1 = None
+marker2 = None
+turn = None
+
 # On start of game it will pass start & it will greet as welcome and at end it will print Good Day 
 def greet(what):
     if what == 'start':
@@ -22,8 +26,21 @@ def display_board(board):
         i+=3
 
 def player_input():
-    player1 = input("Please pick a marker 'X' or 'O':  ")
-    return player1
+    ch = input("Please pick a marker 'X' or 'O':  ")
+    if ch == 'X':
+        marker1 = 'X'
+        marker2 = 'O'
+    elif ch == 'O':
+        marker1 = 'O'
+        marker2 = 'X'
+    else:
+        marker1 = 'X'
+        marker2 = 'O'
+    print(f'Player 1 have {marker1} & Player 2 have {marker2}')
+    turn = 'player1' # add logic here to choose player randomly.
+
+def place_marker(board, marker, position):
+    board[position-1] = marker
 
 def win_check(board, mark):
     display_board(board)
@@ -37,17 +54,31 @@ def replay():
         print("Well Played!")
         return False
 
+def player_choice(board):
+    position = input(f'Enter your position (1-9): ')
+    if turn == 'player1':
+        place_marker(board, marker1, position)
+        turn = 'player2'
+    else:
+        place_marker(board, marker2, position)
+        turn = 'player1'
+
+
 # The game begins... 9th June 26
 clear_screen()
 greet('start')
-test_board = ['#','X','O','X','O','X','O','X','O','X']
-display_board(test_board)
+game_board = [' ' for _ in range(0,9)]
+display_board(game_board)
+
+player_input()
 
 choice = True
-
-while choice == True:    
-    ch = player_input()
-    win_check(test_board,ch)
+while choice == True:   
+    player_choice(game_board)
+    display_board(game_board)
+    # win_check(game_board,ch)
     choice = replay()
 
 greet('stop')
+
+https://chatgpt.com/share/6a3de5ea-88c8-83e8-a664-44a1c1a87bea
