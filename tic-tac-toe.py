@@ -21,7 +21,13 @@ def display_board(board):
         i+=3
 
 def player_input():
-    player1 = input("Please pick a marker 'X' or 'O'")
+    player1 = input("Please pick a marker 'X' or 'O': ")
+
+def place_marker(board, marker, position):
+    ch = input('Enter position: ')
+
+def win_check(board, mark): 
+    pass
 
 # The game begins... 9th June 26
 clear_screen()
@@ -29,6 +35,7 @@ greet('start')
 
 test_board = ['#','X','O','X','O','X','O','X','O','X']
 display_board(test_board)
+
 player_input()
 
 greet('stop')
