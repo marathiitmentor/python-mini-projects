@@ -1,8 +1,5 @@
 from os import name, system
 
-marker1 = None
-marker2 = None
-turn = None
 
 # On start of game it will pass start & it will greet as welcome and at end it will print Good Day 
 def greet(what):
@@ -19,49 +16,59 @@ def clear_screen():
 
 def display_board(board):
     clear_screen()
-    i = 0
-    while i<8:
-        print(f'{board[i]}  |  {board[i+1]}  |  {board[i+2]}')
-        print('--------------')
-        i+=3
+    # i = 0
+    # while i<8:
+    #     print(f'{board[i]}  |  {board[i+1]}  |  {board[i+2]}')
+    #     print('--------------')
+    #     i+=3
+  
+    print(f'{board[6]}  |  {board[7]}  |  {board[8]}')
+    print('---+-----+---')
+    print(f'{board[3]}  |  {board[4]}  |  {board[5]}')
+    print('---+-----+---')
+    print(f'{board[0]}  |  {board[1]}  |  {board[2]}')
 
 def player_input():
-    ch = input("Please pick a marker 'X' or 'O':  ")
-    if ch == 'X':
-        marker1 = 'X'
-        marker2 = 'O'
-    elif ch == 'O':
-        marker1 = 'O'
-        marker2 = 'X'
-    else:
-        marker1 = 'X'
-        marker2 = 'O'
-    print(f'Player 1 have {marker1} & Player 2 have {marker2}')
-    turn = 'player1' # add logic here to choose player randomly.
+    marker = input("Please pick a marker 'X' or 'O'>  ")
+    return marker
 
 def place_marker(board, marker, position):
-    board[position-1] = marker
+    # Need validation logic here before adding into board
+    board[position-1] = marker.upper()
+    does_win = win_check(board, marker.upper())
+    return does_win
 
-def win_check(board, mark):
-    display_board(board)
+def win_check(board, marker):
+    if (
+            board[0] == board[1] == board[2] == marker or
+            board[3] == board[4] == board[5] == marker or
+            board[6] == board[7] == board[8] == marker or
+            board[0] == board[3] == board[6] == marker or
+            board[1] == board[4] == board[7] == marker or
+            board[2] == board[5] == board[8] == marker or
+            board[0] == board[4] == board[8] == marker or
+            board[2] == board[4] == board[6] == marker
+    ):
+        return True
+    return False
 
 def replay():
     choice = input("Do you want to play further? ")
-    if choice=='Y' or choice=='Yes':
-        print("Nice! Keep Playing")
+    if choice=='Y' or choice=='y':
         return True
-    else:
-        print("Well Played!")
-        return False
+    
+    return False
 
 def player_choice(board):
     position = input(f'Enter your position (1-9): ')
-    if turn == 'player1':
-        place_marker(board, marker1, position)
-        turn = 'player2'
-    else:
-        place_marker(board, marker2, position)
-        turn = 'player1'
+    # Add logic to check board for given position. Right now just sending back the position    
+    return int(position)
+
+def full_board_check(board):
+    for val in board:
+        if val == ' ':
+            return True
+    return False
 
 
 # The game begins... 9th June 26
@@ -70,15 +77,23 @@ greet('start')
 game_board = [' ' for _ in range(0,9)]
 display_board(game_board)
 
-player_input()
-
 choice = True
 while choice == True:   
-    player_choice(game_board)
+    marker = player_input()
+    position = player_choice(game_board)
+    is_full = full_board_check(game_board)
+    if is_full == True:
+        choice=False
+        print('Sorry! Board is full. Thank you for playing.')
+        break
+    
+    does_win = place_marker(game_board, marker, position)
     display_board(game_board)
-    # win_check(game_board,ch)
-    choice = replay()
+    
+    if does_win == True:
+        choice=False
+        print(f'{marker} Won!')
+    else:
+        choice = replay()
 
 greet('stop')
-
-https://chatgpt.com/share/6a3de5ea-88c8-83e8-a664-44a1c1a87bea
