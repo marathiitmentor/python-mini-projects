@@ -62,13 +62,16 @@ def replay():
 def player_choice(board):
     position = input(f'Enter your position (1-9): ')
     # Add logic to check board for given position. Right now just sending back the position    
+    if board[int(position)] != ' ':
+        return -1
+    
     return int(position)
 
 def full_board_check(board):
     for val in board:
         if val == ' ':
-            return True
-    return False
+            return False
+    return True
 
 
 # The game begins... 9th June 26
@@ -81,19 +84,26 @@ choice = True
 while choice == True:   
     marker = player_input()
     position = player_choice(game_board)
-    is_full = full_board_check(game_board)
-    if is_full == True:
-        choice=False
-        print('Sorry! Board is full. Thank you for playing.')
-        break
+    if position == -1:
+        temp = input('Sorry! Place is filled already. Enter Y to continue: ')
+        if temp == 'Y' or temp == 'y':
+            choice = True
+        else:
+            choice = False
+    else:    
+        is_full = full_board_check(game_board)
+        if is_full == True:
+            choice=False
+            print('Sorry! Board is full. Thank you for playing.')
+            break
+        
+        does_win = place_marker(game_board, marker, position)
+        display_board(game_board)
     
-    does_win = place_marker(game_board, marker, position)
-    display_board(game_board)
-    
-    if does_win == True:
-        choice=False
-        print(f'{marker} Won!')
-    else:
-        choice = replay()
+        if does_win == True:
+            choice=False
+            print(f'{marker} Won!')
+        else:
+            choice = replay()
 
 greet('stop')
