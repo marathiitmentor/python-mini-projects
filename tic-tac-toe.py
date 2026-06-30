@@ -62,10 +62,11 @@ def replay():
 def player_choice(board):
     position = input(f'Enter your position (1-9): ')
     # Add logic to check board for given position. Right now just sending back the position    
-    if board[int(position)] != ' ':
+    curpos = int(position)
+    if board[curpos-1] != ' ':
         return -1
     
-    return int(position)
+    return curpos
 
 def full_board_check(board):
     for val in board:
