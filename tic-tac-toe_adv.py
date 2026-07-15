@@ -1,10 +1,6 @@
-from os import name, system
+from my_common_function import greet, clear_screen
+
 # On start of game it will pass start & it will greet as welcome and at end it will print Good Day 
-def greet(what):
-    if what == 'start':
-        print('********* Welcome to Tic Toc Toe! *********')
-    else:
-        print('Have a Great Day')
 
 def replay():
     choice = input("Do you want to play further? ")
@@ -17,11 +13,7 @@ def win_check(board, marker):
         return True
     return False
 
-def clear_screen():
-    if name == 'nt':
-        _ = system('cls')
-    else:
-        _ = system('clear')
+
 
 def display_board(board):
     clear_screen()  
@@ -56,35 +48,37 @@ def full_board_check(board):
     return True
 
 
+
+
 # The game begins... 9th June 26
 clear_screen()
 greet('start')
 game_board = [' ' for _ in range(0,9)]
 display_board(game_board)
 
-while 1==1:
-    pass
+# while 1==1:
+#     pass
 
-marker = player_input()
-position = player_choice(game_board)
-if position == -1:
-    temp = input('Sorry! Place is filled already. Enter Y to continue: ')
-    if temp == 'Y' or temp == 'y':
-        choice = True
-    else:
-        choice = False
-else:    
-    is_full = full_board_check(game_board)
-    if is_full == True:
-        choice=False
-        print('Sorry! Board is full. Thank you for playing.')
+# marker = player_input()
+# position = player_choice(game_board)
+# if position == -1:
+#     temp = input('Sorry! Place is filled already. Enter Y to continue: ')
+#     if temp == 'Y' or temp == 'y':
+#         choice = True
+#     else:
+#         choice = False
+# else:    
+#     is_full = full_board_check(game_board)
+#     if is_full == True:
+#         choice=False
+#         print('Sorry! Board is full. Thank you for playing.')
     
-    does_win = place_marker(game_board, marker, position)
-    display_board(game_board)
+#     does_win = place_marker(game_board, marker, position)
+#     display_board(game_board)
 
-    if does_win == True:
-        choice=False
-        print(f'{marker} Won!')
-    else:
-        greet('stop')
+#     if does_win == True:
+#         choice=False
+#         print(f'{marker} Won!')
+#     else:
+#         greet('stop')
 

@@ -1,4 +1,4 @@
-from os import name, system
+
 
 
 # On start of game it will pass start & it will greet as welcome and at end it will print Good Day 
