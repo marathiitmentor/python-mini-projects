@@ -1,0 +1,3 @@
+# CARD Class
+# SUIT RANK VALUE
+
